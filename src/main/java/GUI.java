@@ -14,7 +14,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-//import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GUI {
 
@@ -28,7 +27,7 @@ public class GUI {
      * drawing functionality. */
     private Color color = Color.WHITE;
     /** General user messages. */
-    private JLabel output = new JLabel("You DooDoodle!");
+    private JLabel output = new JLabel("Assignment 1");
 
     private BufferedImage colorSample = new BufferedImage(
             16,16,BufferedImage.TYPE_INT_RGB);
