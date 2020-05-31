@@ -256,25 +256,25 @@ public class GUI {
         this.imageLabel.repaint();
     }
 
-    public void rectangle(int x, int y, int width, int height, Graphics2D g) {
+    public void drawRectangle(int x, int y, int width, int height, Graphics2D g) {
         g.fillRect(x, y, width, height);
         g.dispose();
         this.imageLabel.repaint();
     }
 
-    public void oval(int x, int y, int width, int height, Graphics2D g) {
+    public void drawOval(int x, int y, int width, int height, Graphics2D g) {
         g.fillOval(x, y, width, height);
         g.dispose();
         this.imageLabel.repaint();
     }
 
-    public void line(int x, int y, int x2, int y2, Graphics2D g) {
+    public void drawLine(int x, int y, int x2, int y2, Graphics2D g) {
         g.drawLine(x, y, x2, y2);
         g.dispose();
         this.imageLabel.repaint();
     }
 
-    public void curve(int x, int y, int x2, int y2, Graphics2D g) {
+    public void drawCurve(int x, int y, int x2, int y2, Graphics2D g) {
         g.drawArc(x, y, x2, y2, 0, 90);
         g.dispose();
         this.imageLabel.repaint();
@@ -330,20 +330,19 @@ public class GUI {
                         arg0.getPoint().y - selectionStart.y);
             }
             if (activeTool == GUI.RECTANGLE_TOOL) {
-                rectangle(selection.x, selection.y, selection.width, selection.height, createImage());
+                drawRectangle(selection.x, selection.y, selection.width, selection.height, createImage());
             }
 
             if (activeTool == GUI.OVAL_TOOL) {
-                oval(selection.x, selection.y, selection.width, selection.height, createImage());
+                drawOval(selection.x, selection.y, selection.width, selection.height, createImage());
             }
 
             if (activeTool == GUI.LINE_TOOL) {
-                line(selection.x, selection.y, selection.width, selection.height, createImage());
-                System.out.println("making a line" + " " + selection.x + " " + selection.y + " " + selection.width + " " + selection.height);
+                drawLine(selection.x, selection.y, selection.width, selection.height, createImage());
             }
 
             if (activeTool == GUI.CURVE_TOOL) {
-                curve(selection.x, selection.y, selection.width, selection.height, createImage());
+                drawCurve(selection.x, selection.y, selection.width, selection.height, createImage());
             }
 
 
