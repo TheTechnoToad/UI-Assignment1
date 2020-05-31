@@ -436,13 +436,29 @@ public class GUI {
         this.imageLabel.repaint();
     }
 
-    public void oval(Point point) {
-
+    public void oval(int x, int y, int width, int height) {
+        Graphics2D g = this.canvasImage.createGraphics();
+        g.setRenderingHints(renderingHints);
+        g.setColor(this.color);
+        g.setStroke(stroke);
+        g.fillOval(x,y,width,height);
+        g.dispose();
+        this.imageLabel.repaint();
     }
 
     public void line(Point point) {
 
     }
+
+    /*public void drawShape(){
+        Graphics2D g = this.canvasImage.createGraphics();
+        g.setRenderingHints(renderingHints);
+        g.setColor(this.color);
+        g.setStroke(stroke);
+        g.drawRect(point.x, point.y);
+
+
+    }*/
 
     class ImageMouseListener extends MouseAdapter {
 /*
@@ -466,8 +482,10 @@ public class GUI {
                 rectangleStart = arg0.getPoint();
                 System.out.println("rectanglearoo");
             } else if (activeTool==GUI.OVAL_TOOL) {
+                selectionStart = arg0.getPoint();
+                System.out.println("Oval");
                 // TODO
-                oval(arg0.getPoint());
+                selectionStart = arg0.getPoint();
             } else if (activeTool==GUI.LINE_TOOL) {
                 // TODO
                 line(arg0.getPoint());
@@ -497,6 +515,18 @@ public class GUI {
                         arg0.getPoint().y-rectangleStart.y);
                 rectangle(rectangleImage);
             }
+
+            if (activeTool==GUI.OVAL_TOOL) {
+                selection = new Rectangle(
+                        selectionStart.x,
+                        selectionStart.y,
+                        arg0.getPoint().x - selectionStart.x,
+                        arg0.getPoint().y- selectionStart.y);
+                oval(selection.x,selection.y,selection.width,selection.height);
+            }
+
+
+
         }
     }
 
@@ -514,7 +544,7 @@ public class GUI {
             } else if (activeTool==GUI.DRAW_TOOL) {
                 draw(arg0.getPoint());
             }  else if (activeTool==GUI.OVAL_TOOL) {
-                oval(arg0.getPoint());
+
             } else if (activeTool==GUI.LINE_TOOL) {
                 draw(arg0.getPoint());
             }
