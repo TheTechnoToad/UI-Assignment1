@@ -431,6 +431,7 @@ public class GUI {
         g.setStroke(stroke);
         int n = 0;
         g.draw(rectangleImage);
+        g.fill(rectangleImage);
         g.dispose();
         this.imageLabel.repaint();
     }
@@ -512,13 +513,7 @@ public class GUI {
                         arg0.getPoint().y-selectionStart.y);
             } else if (activeTool==GUI.DRAW_TOOL) {
                 draw(arg0.getPoint());
-            } else if (activeTool==GUI.RECTANGLE_TOOL) {
-                rectangleImage = new Rectangle(
-                        rectangleStart.x,
-                        rectangleStart.y,
-                        arg0.getPoint().x-rectangleStart.x,
-                        arg0.getPoint().y-rectangleStart.y);
-            } else if (activeTool==GUI.OVAL_TOOL) {
+            }  else if (activeTool==GUI.OVAL_TOOL) {
                 oval(arg0.getPoint());
             } else if (activeTool==GUI.LINE_TOOL) {
                 draw(arg0.getPoint());
