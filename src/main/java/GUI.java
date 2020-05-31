@@ -492,10 +492,9 @@ public class GUI {
                 rectangleImage = new Rectangle(
                         rectangleStart.x,
                         rectangleStart.y,
-                        arg0.getPoint().x,
-                        arg0.getPoint().y);
+                        arg0.getPoint().x-rectangleStart.x,
+                        arg0.getPoint().y-rectangleStart.y);
                 rectangle(rectangleImage);
-
             }
         }
     }
