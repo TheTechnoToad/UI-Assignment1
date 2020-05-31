@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.RenderingHints.Key;
 import java.awt.event.*;
+import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class GUI {
     public static final int RECTANGLE_TOOL = 3;
     public static final int OVAL_TOOL = 4;
     public static final int LINE_TOOL = 5;
+    public static final int CURVE_TOOL = 6;
 
     private Point selectionStart;
     private Point rectangleStart;
@@ -142,6 +144,7 @@ public class GUI {
             final JRadioButton rectangle = new JRadioButton("Rectangle");
             final JRadioButton oval = new JRadioButton("Oval");
             final JRadioButton line = new JRadioButton("Line");
+            final JRadioButton curve = new JRadioButton("Curve");
 
             tools.add(crop);
             tools.add(select);
@@ -150,6 +153,7 @@ public class GUI {
             tools.add(rectangle);
             tools.add(oval);
             tools.add(line);
+            tools.add(curve);
 
 
             ButtonGroup bg = new ButtonGroup();
@@ -159,6 +163,7 @@ public class GUI {
             bg.add(rectangle);
             bg.add(oval);
             bg.add(line);
+            bg.add(curve);
 
             ActionListener toolGroupListener = new ActionListener() {
                 @Override
@@ -178,6 +183,9 @@ public class GUI {
                     }
                     else if (ae.getSource()==line) {
                         activeTool = LINE_TOOL;
+                    }
+                    else if (ae.getSource()==curve) {
+                        activeTool = CURVE_TOOL;
                     }
                 }
             };
@@ -456,12 +464,13 @@ public class GUI {
         this.imageLabel.repaint();
     }
 
-    public void curve(int x, int y, int x2, int y2) {
+    public void curve(int x, int y,int cx,int cy, int x2, int y2) {
         Graphics2D g = this.canvasImage.createGraphics();
         g.setRenderingHints(renderingHints);
         g.setColor(this.color);
         g.setStroke(stroke);
-        g.drawLine(x,y,x2,y2);
+        QuadCurve2D q = new QuadCurve2D.Float();
+
         g.dispose();
         this.imageLabel.repaint();
     }
@@ -506,6 +515,10 @@ public class GUI {
                 selectionStart = arg0.getPoint();
                 System.out.println("Oval");
                 // TODO
+            } else if (activeTool==GUI.CURVE_TOOL) {
+                selectionStart = arg0.getPoint();
+                System.out.println("Oval");
+                // TODO
             } else {
                 JOptionPane.showMessageDialog(
                         gui,
@@ -543,6 +556,15 @@ public class GUI {
             }
 
             if (activeTool==GUI.LINE_TOOL) {
+                selection = new Rectangle(
+                        selectionStart.x,
+                        selectionStart.y,
+                        arg0.getPoint().x,
+                        arg0.getPoint().y);
+                line(selection.x,selection.y,selection.width,selection.height);
+            }
+
+            if (activeTool==GUI.CURVE_TOOL) {
                 selection = new Rectangle(
                         selectionStart.x,
                         selectionStart.y,
