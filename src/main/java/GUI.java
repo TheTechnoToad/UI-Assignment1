@@ -36,6 +36,9 @@ public class GUI {
     public static final int SELECTION_TOOL = 0;
     public static final int DRAW_TOOL = 1;
     public static final int TEXT_TOOL = 2;
+    public static final int RECTANGLE_TOOL = 3;
+    public static final int OVAL_TOOL = 4;
+    public static final int LINE_TOOL = 5;
 
     private Point selectionStart;
     private Rectangle selection;
@@ -134,16 +137,27 @@ public class GUI {
             final JRadioButton select = new JRadioButton("Select", true);
             final JRadioButton draw = new JRadioButton("Draw");
             final JRadioButton text = new JRadioButton("Text");
+            final JRadioButton rectangle = new JRadioButton("Rectangle");
+            final JRadioButton oval = new JRadioButton("Oval");
+            final JRadioButton line = new JRadioButton("Line");
 
             tools.add(crop);
             tools.add(select);
             tools.add(draw);
             tools.add(text);
+            tools.add(rectangle);
+            tools.add(oval);
+            tools.add(line);
+
 
             ButtonGroup bg = new ButtonGroup();
             bg.add(select);
             bg.add(text);
             bg.add(draw);
+            bg.add(rectangle);
+            bg.add(oval);
+            bg.add(line);
+
             ActionListener toolGroupListener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
@@ -153,6 +167,15 @@ public class GUI {
                         activeTool = DRAW_TOOL;
                     } else if (ae.getSource()==text) {
                         activeTool = TEXT_TOOL;
+                    }
+                    else if (ae.getSource()==rectangle) {
+                        activeTool = RECTANGLE_TOOL;
+                    }
+                    else if (ae.getSource()==oval) {
+                        activeTool = OVAL_TOOL;
+                    }
+                    else if (ae.getSource()==line) {
+                        activeTool = LINE_TOOL;
                     }
                 }
             };
@@ -396,19 +419,43 @@ public class GUI {
         this.imageLabel.repaint();
     }
 
-    class ImageMouseListener extends MouseAdapter {
+    public void rectangle(Point point) {
 
+    }
+
+    public void oval(Point point) {
+
+    }
+
+    public void line(Point point) {
+
+    }
+
+    class ImageMouseListener extends MouseAdapter {
+/*
+* add functionality of rectangle, oval, line functions to mousePressed method.
+* Seems a conditional determines what action to take.
+*
+ */
         @Override
         public void mousePressed(MouseEvent arg0) {
             // TODO Auto-generated method stub
             if (activeTool==GUI.SELECTION_TOOL) {
                 selectionStart = arg0.getPoint();
             } else if (activeTool==GUI.DRAW_TOOL) {
-                // TODO
                 draw(arg0.getPoint());
             } else if (activeTool==GUI.TEXT_TOOL) {
                 // TODO
                 text(arg0.getPoint());
+            } else if (activeTool==GUI.RECTANGLE_TOOL) {
+                // TODO
+                rectangle(arg0.getPoint());
+            } else if (activeTool==GUI.OVAL_TOOL) {
+                // TODO
+                oval(arg0.getPoint());
+            } else if (activeTool==GUI.LINE_TOOL) {
+                // TODO
+                line(arg0.getPoint());
             } else {
                 JOptionPane.showMessageDialog(
                         gui,
@@ -442,6 +489,12 @@ public class GUI {
                         arg0.getPoint().x-selectionStart.x,
                         arg0.getPoint().y-selectionStart.y);
             } else if (activeTool==GUI.DRAW_TOOL) {
+                draw(arg0.getPoint());
+            } else if (activeTool==GUI.RECTANGLE_TOOL) {
+                rectangle(arg0.getPoint());
+            } else if (activeTool==GUI.OVAL_TOOL) {
+                oval(arg0.getPoint());
+            } else if (activeTool==GUI.LINE_TOOL) {
                 draw(arg0.getPoint());
             }
         }
