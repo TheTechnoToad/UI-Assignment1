@@ -446,8 +446,24 @@ public class GUI {
         this.imageLabel.repaint();
     }
 
-    public void line(Point point) {
+    public void line(int x, int y, int x2, int y2) {
+        Graphics2D g = this.canvasImage.createGraphics();
+        g.setRenderingHints(renderingHints);
+        g.setColor(this.color);
+        g.setStroke(stroke);
+        g.drawLine(x,y,x2,y2);
+        g.dispose();
+        this.imageLabel.repaint();
+    }
 
+    public void curve(int x, int y, int x2, int y2) {
+        Graphics2D g = this.canvasImage.createGraphics();
+        g.setRenderingHints(renderingHints);
+        g.setColor(this.color);
+        g.setStroke(stroke);
+        g.drawLine(x,y,x2,y2);
+        g.dispose();
+        this.imageLabel.repaint();
     }
 
     /*public void drawShape(){
@@ -487,8 +503,9 @@ public class GUI {
                 // TODO
                 selectionStart = arg0.getPoint();
             } else if (activeTool==GUI.LINE_TOOL) {
+                selectionStart = arg0.getPoint();
+                System.out.println("Oval");
                 // TODO
-                line(arg0.getPoint());
             } else {
                 JOptionPane.showMessageDialog(
                         gui,
@@ -525,6 +542,15 @@ public class GUI {
                 oval(selection.x,selection.y,selection.width,selection.height);
             }
 
+            if (activeTool==GUI.LINE_TOOL) {
+                selection = new Rectangle(
+                        selectionStart.x,
+                        selectionStart.y,
+                        arg0.getPoint().x,
+                        arg0.getPoint().y);
+                line(selection.x,selection.y,selection.width,selection.height);
+            }
+
 
 
         }
@@ -546,7 +572,7 @@ public class GUI {
             }  else if (activeTool==GUI.OVAL_TOOL) {
 
             } else if (activeTool==GUI.LINE_TOOL) {
-                draw(arg0.getPoint());
+
             }
         }
 
