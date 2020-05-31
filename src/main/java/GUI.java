@@ -41,7 +41,9 @@ public class GUI {
     public static final int LINE_TOOL = 5;
 
     private Point selectionStart;
+    private Point rectangleStart;
     private Rectangle selection;
+    private Rectangle rectangleImage;
     private boolean dirty = false;
     private Stroke stroke = new BasicStroke(
             3,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,1.7f);
@@ -182,6 +184,9 @@ public class GUI {
             select.addActionListener(toolGroupListener);
             draw.addActionListener(toolGroupListener);
             text.addActionListener(toolGroupListener);
+            rectangle.addActionListener(toolGroupListener);
+            oval.addActionListener(toolGroupListener);
+            line.addActionListener(toolGroupListener);
 
             gui.add(tools, BorderLayout.LINE_END);
 
@@ -419,8 +424,15 @@ public class GUI {
         this.imageLabel.repaint();
     }
 
-    public void rectangle(Point point) {
-
+    public void rectangle(Rectangle rectangleImage) {
+        Graphics2D g = this.canvasImage.createGraphics();
+        g.setRenderingHints(renderingHints);
+        g.setColor(this.color);
+        g.setStroke(stroke);
+        int n = 0;
+        g.draw(rectangleImage);
+        g.dispose();
+        this.imageLabel.repaint();
     }
 
     public void oval(Point point) {
@@ -442,6 +454,7 @@ public class GUI {
             // TODO Auto-generated method stub
             if (activeTool==GUI.SELECTION_TOOL) {
                 selectionStart = arg0.getPoint();
+                System.out.println("select me");
             } else if (activeTool==GUI.DRAW_TOOL) {
                 draw(arg0.getPoint());
             } else if (activeTool==GUI.TEXT_TOOL) {
@@ -449,7 +462,8 @@ public class GUI {
                 text(arg0.getPoint());
             } else if (activeTool==GUI.RECTANGLE_TOOL) {
                 // TODO
-                rectangle(arg0.getPoint());
+                rectangleStart = arg0.getPoint();
+                System.out.println("rectanglearoo");
             } else if (activeTool==GUI.OVAL_TOOL) {
                 // TODO
                 oval(arg0.getPoint());
@@ -474,6 +488,15 @@ public class GUI {
                         arg0.getPoint().x,
                         arg0.getPoint().y);
             }
+            if (activeTool==GUI.RECTANGLE_TOOL) {
+                rectangleImage = new Rectangle(
+                        rectangleStart.x,
+                        rectangleStart.y,
+                        arg0.getPoint().x,
+                        arg0.getPoint().y);
+                rectangle(rectangleImage);
+
+            }
         }
     }
 
@@ -491,7 +514,11 @@ public class GUI {
             } else if (activeTool==GUI.DRAW_TOOL) {
                 draw(arg0.getPoint());
             } else if (activeTool==GUI.RECTANGLE_TOOL) {
-                rectangle(arg0.getPoint());
+                rectangleImage = new Rectangle(
+                        rectangleStart.x,
+                        rectangleStart.y,
+                        arg0.getPoint().x-rectangleStart.x,
+                        arg0.getPoint().y-rectangleStart.y);
             } else if (activeTool==GUI.OVAL_TOOL) {
                 oval(arg0.getPoint());
             } else if (activeTool==GUI.LINE_TOOL) {
